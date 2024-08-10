@@ -37,7 +37,6 @@ class AvitoParser(QThread):
 
         # Пути к бинарным файлам
         self.chrome_path = '/opt/google/chrome/chrome'
-        self.chrome_driver_path = '/usr/local/bin/chromedriver'
 
         # Настройка опций Chrome
         self.options = Options()
@@ -54,7 +53,7 @@ class AvitoParser(QThread):
 
     def run(self):
         # Установка ChromeDriver с использованием webdriver_manager
-        service = Service(self.chrome_driver_path)  # Указываем путь к ChromeDriver
+        service = Service(ChromeDriverManager().install())  # Позволяет webdriver_manager управлять версией ChromeDriver
         self.driver = webdriver.Chrome(service=service, options=self.options)
 
         try:
