@@ -18,4 +18,3 @@ def get_user_files(user_id):
         'viewed': f"{viewed_dir}/{user_id}/viewed.txt"
     }
 
-#база
