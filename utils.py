@@ -17,3 +17,5 @@ def get_user_files(user_id):
         'settings': f"{settings_dir}/{user_id}/settings.json",
         'viewed': f"{viewed_dir}/{user_id}/viewed.txt"
     }
+
+#база
