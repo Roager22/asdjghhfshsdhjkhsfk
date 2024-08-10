@@ -12,7 +12,6 @@ from PyQt5.QtCore import QThread, pyqtSignal
 from locator import AvitoLocator
 from utils import get_user_files
 
-
 class AvitoParser(QThread):
     finished = pyqtSignal()
     update_log = pyqtSignal(str)
@@ -36,18 +35,26 @@ class AvitoParser(QThread):
         self.rest_time = 10
         self.chat_id = ""
 
+        # Пути к бинарным файлам
+        self.chrome_path = '/opt/google/chrome/chrome'
+        self.chrome_driver_path = '/usr/local/bin/chromedriver'
+
         # Настройка опций Chrome
         self.options = Options()
+        self.options.binary_location = self.chrome_path  # Указываем путь к бинарному файлу Chrome
+        self.options.add_argument("--headless")  # Запуск Chrome в фоновом режиме
         self.options.add_argument("--start-maximized")
         self.options.add_argument("--disable-infobars")
         self.options.add_argument("--disable-extensions")
+        self.options.add_argument("--no-sandbox")
+        self.options.add_argument("--disable-dev-shm-usage")
 
         # Получаем пути к файлам
         self.files = get_user_files(self.user_id)
 
     def run(self):
         # Установка ChromeDriver с использованием webdriver_manager
-        service = Service(ChromeDriverManager().install())
+        service = Service(self.chrome_driver_path)  # Указываем путь к ChromeDriver
         self.driver = webdriver.Chrome(service=service, options=self.options)
 
         try:
